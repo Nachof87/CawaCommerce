@@ -1,10 +1,12 @@
 import logo from '../src/assets/cart-logo.png'
+import { useCartContext } from '../context/cartContext'
 
 function CartWidget(){
+    const { getQty } = useCartContext()
     return(
         <div>
             <img src={logo} alt='cart-widget' className='class-Cart'/>
-            <h className='class-CartCount'>3</h>
+            <span className='class-CartCount'>{getQty()}</span>
         </div>
         
 

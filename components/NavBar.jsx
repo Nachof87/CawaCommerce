@@ -5,14 +5,16 @@ import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import CartWidget from './CartWidget'
 import { Link } from 'react-router-dom'
+import { getCategories } from "../firebase/db"
 
 function NavBar(){
 const[categories, setCategories] = useState([])
 
 useEffect (() => {
-    fetch('https://dragonball-api.com/api/characters?limit=100')
-        .then(res => res.json())
-        .then(res => setCategories(Array.from(new Set(res.items.map(item => item.race)))))
+    const uniqueCategories = getCategories()
+    uniqueCategories.then((value)=>{
+        setCategories(value)
+    })
 }, [])
 
     return(
@@ -22,13 +24,13 @@ useEffect (() => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                <NavDropdown title="Categories" id="collapsible-nav-dropdown">
-                    {categories.map(race =>(
-                        <NavDropdown.Item to={`race/${race}`} key={race} as={Link}>{race}</NavDropdown.Item>
-                    ))}
+                <NavDropdown title="Categorias" id="collapsible-nav-dropdown">
+                    {categories.map((category, index)=>(<NavDropdown.Item key={index} to={`category/${category}`} as={Link}>{category}</NavDropdown.Item>))}
                 </NavDropdown>
                 </Nav>
+                <Link to='/cart'>
                     <CartWidget/>
+                </Link>
             </Navbar.Collapse>
             </Container>
         </Navbar>

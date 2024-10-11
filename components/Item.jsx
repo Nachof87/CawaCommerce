@@ -16,7 +16,8 @@ function Item({item}){
                         <Card.Img src={item.image} className="class-ImageCard"/>
                     </Button>
                     <Card.Title>{item.name}</Card.Title>
-                    <Card.Text>{item.race}</Card.Text>
+                    <Card.Text>{item.category}</Card.Text>
+                    <Card.Title>${item.price}</Card.Title>
                 </Card.Body>
             </Card>
         </Col>
